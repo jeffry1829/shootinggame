@@ -9,8 +9,8 @@ class Field{
   Painter painter;
   ArrayList<Target> targetlist=new ArrayList<Target>();
   Target target;
-  Image targetImage=new ImageIcon("./img/target.png").getImage();
-  Image myImage=new ImageIcon("./img/my.png").getImage();
+  //Image targetImage=new ImageIcon("./img/target.png").getImage();
+  //Image myImage=new ImageIcon("./img/my.png").getImage();
   final static Point myLocation=new Point(300,560);
   boolean toRemove=false;
   int crashIndex;
@@ -44,10 +44,12 @@ class Field{
         if(!toRemove){
           
           Graphics2D g2=(Graphics2D)g;
-          g.drawImage(targetImage,(int)target.getLocation().getX(),(int)target.getLocation().getY(),50,50,Color.white,this);
-        
-          g.drawImage(myImage,300,560,50,50,Color.white,this);
-        
+          //g.drawImage(targetImage,(int)target.getLocation().getX(),(int)target.getLocation().getY(),50,50,Color.white,this);
+            g.setColor(Color.RED);
+            g.fillOval((int)target.getLocation().getX(),(int)target.getLocation().getY(),50,50);
+          //g.drawImage(myImage,300,560,50,50,Color.white,this);
+            g.setColor(Color.BLACK);
+            g.fillOval(300,560,50,50);
         }
         else{
           g.setColor(Color.white);
