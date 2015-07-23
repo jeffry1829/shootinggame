@@ -9,5 +9,6 @@ public class Shootinggame{
     Field field=new Field();
     field.construc();
     field.placetarget(20);
+    new Move();
   }
 } 

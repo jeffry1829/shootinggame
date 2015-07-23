@@ -7,7 +7,7 @@ import java.awt.event.*;
 class Target{
   
   private Point location;
-  public final static int bulletspeed=10;
+  public final static int bulletspeed=1;
   
   public Target(int x,int y){
     setLocation(x,y);

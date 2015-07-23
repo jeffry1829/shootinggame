@@ -8,7 +8,7 @@ class Field{
   JFrame field;
   Painter painter;
   ArrayList<Target> targetlist=new ArrayList<Target>();
-  Target target;
+  Target target=new Target(0,0);
   //Image targetImage=new ImageIcon("./img/target.png").getImage();
   //Image myImage=new ImageIcon("./img/my.png").getImage();
   final static Point myLocation=new Point(300,560);
@@ -29,14 +29,16 @@ class Field{
       int randomX = (int)(Math.random()*600);
       int randomY = (int)(Math.random()*500);
       Point point=new Point(randomX,randomY);
-      target=new Target((int)point.getX(),(int)point.getY());
-      targetlist.add(target);
+      target.setLocation((int)point.getX(),(int)point.getY());
+      Target targetNsamereference=new Target((int)point.getX(),(int)point.getY());
+      targetlist.add(targetNsamereference);
       field.getContentPane().repaint();
+      try{Thread.sleep(50);}catch(Exception e){} // Very Very Important
     }
   } 
 
   public double distance(Point p1,Point p2){
-    return Math.sqrt( Math.abs( (p1.getX()-p2.getX())) * Math.abs( (p1.getX()-p2.getX()) )+Math.abs( (p1.getY()-p2.getY()) )*Math.abs( (p1.getY()-p2.getY()) ) );
+    return Math.sqrt( ( (int)( p1.getX()-p2.getX() ) * (int)( p1.getX()-p2.getX() ) ) + ( (int)( p1.getY()-p2.getY() ) * (int)( p1.getY()-p2.getY() ) ) );
   } 
   
     class Painter extends JPanel{
@@ -67,16 +69,18 @@ class Field{
 
                                                                                System.out.println("Mouse Clicked");
         
-        for(int i=1;i<=50;i++){
+        for(int i=1;i<=500;i++){
           Move move=new Move();
           Point tomove=move.toMove(myLocation);
-          Ibullet.move((int)tomove.getX(),(int)tomove.getY());
-          for(Target t : targetlist){
-            if( distance(t.getLocation(),Ibullet) < 50){
-              targetlist.remove( targetlist.indexOf(t) );
+          Ibullet.setLocation((int)(Ibullet.getX() + tomove.getX()) , (int)(Ibullet.getY() + tomove.getY()) );
+          for(int j=0;j<targetlist.size();j++){ // ConcurrentModificationException
+            if( distance(targetlist.get(j).getLocation(),Ibullet) < 300){
+                                                                               System.out.println("OK");
+              targetlist.remove(j);
               toRemove=true;
-              crashIndex=targetlist.indexOf(t);
-              field.getContentPane().repaint();
+              crashIndex=j;
+              field.getContentPane().repaint();                             
+              try{Thread.sleep(50);}catch(Exception e1){} // Very Very Important
               toRemove=false;
               crashIndex=0;
             }

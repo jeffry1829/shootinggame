@@ -10,7 +10,8 @@ public class Move{
   
   public Point toMove(Point mypoint){
     double angle=getAngle(mypoint.getX(),mypoint.getY());
-    Point result=new Point((int)Math.cos(angle)*t.bulletspeed,(int)Math.sin(angle)*t.bulletspeed);
+                                                                                                    //  System.out.println("angle"+angle);
+    Point result=new Point((int)(Math.cos(angle)*t.bulletspeed),(int)(Math.sin(angle)*t.bulletspeed)); // After Math. 's result * anything. All need to be add '(' ')'.
     return result;
   }
 
