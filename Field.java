@@ -73,7 +73,7 @@ class Field{
           Move move=new Move();
           Point tomove=move.toMove(myLocation);
           Ibullet.setLocation((int)(Ibullet.getX() + tomove.getX()) , (int)(Ibullet.getY() + tomove.getY()) );
-          for(int j=0;j<targetlist.size();j++){ // ConcurrentModificationException
+          for(int j=0;j<targetlist.size();j++){
             if( distance(targetlist.get(j).getLocation(),Ibullet) < 300){
                                                                                System.out.println("OK");
               targetlist.remove(j);
@@ -88,4 +88,5 @@ class Field{
         }
       }
     }
-} 
+}
+   

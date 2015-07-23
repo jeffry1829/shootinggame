@@ -16,4 +16,5 @@ class Target{
   public void setLocation(int x,int y){ location=new Point(x,y); }
 
   public Point getLocation(){ return location; }
+  
 } 
