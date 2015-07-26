@@ -14,15 +14,15 @@ class Field{
   final static Point myLocation=new Point(300,560);
   boolean toRemove=false;
   int crashIndex;
-  
+
   public void construc(){
     field=new JFrame("這是個非常好玩的射擊遊戲");
     painter=new Painter();
     painter.addMouseListener(new MListener());
     field.setContentPane(painter);
     field.setBounds(0,0,600,610); // left-i,right-i,width,height
-    field.setVisible(true);  
-  }  
+    field.setVisible(true);
+  }
 
   public void placetarget(int targetlen){
     for(int i=0;i<targetlen;i++){
@@ -33,18 +33,18 @@ class Field{
       Target targetNsamereference=new Target((int)point.getX(),(int)point.getY());
       targetlist.add(targetNsamereference);
       field.getContentPane().repaint();
-      try{Thread.sleep(50);}catch(Exception e){} // Very Very Important
+      try{Thread.sleep(500);}catch(Exception e){} // Very Very Important
     }
-  } 
+  }
 
   public double distance(Point p1,Point p2){
     return Math.sqrt( ( (int)( p1.getX()-p2.getX() ) * (int)( p1.getX()-p2.getX() ) ) + ( (int)( p1.getY()-p2.getY() ) * (int)( p1.getY()-p2.getY() ) ) );
-  } 
-  
+  }
+
     class Painter extends JPanel{
       public void paintComponent(Graphics g){
         if(!toRemove){
-          
+
           Graphics2D g2=(Graphics2D)g;
           //g.drawImage(targetImage,(int)target.getLocation().getX(),(int)target.getLocation().getY(),50,50,Color.white,this);
             g.setColor(Color.RED);
@@ -55,31 +55,34 @@ class Field{
         }
         else{
           g.setColor(Color.white);
-          
+
           g.fillOval((int)targetlist.get(crashIndex).getLocation().getX(),(int)targetlist.get(crashIndex).getLocation().getY(),50,50);
         }
-        
+
       }
-    } //end of inner-class 
+    } //end of inner-class
 
     class MListener extends MouseAdapter{
       public void mouseClicked(MouseEvent e){ // declare attack message
-        
+
         Point Ibullet=myLocation;
 
-                                                                               System.out.println("Mouse Clicked");
+System.out.println("Mouse Clicked");
         
+        Move move=new Move();
+        Point tomove=move.toMove(myLocation);
+
         for(int i=1;i<=500;i++){
-          Move move=new Move();
-          Point tomove=move.toMove(myLocation);
-          Ibullet.setLocation((int)(Ibullet.getX() + tomove.getX()) , (int)(Ibullet.getY() + tomove.getY()) );
+          Ibullet.setLocation( (int)( Ibullet.getLocation().getX() + tomove.getX() ), (int)( Ibullet.getLocation().getX() + tomove.getY() ));
           for(int j=0;j<targetlist.size();j++){
-            if( distance(targetlist.get(j).getLocation(),Ibullet) < 300){
-                                                                               System.out.println("OK");
+System.out.println("OK"+" distance "+distance(targetlist.get(j).getLocation(),Ibullet)
++" Target Location "+targetlist.get(j).getLocation()
++" Ibullet "+Ibullet+" tomove "+tomove);
+            if( distance(targetlist.get(j).getLocation(),Ibullet) < 50){
               targetlist.remove(j);
               toRemove=true;
               crashIndex=j;
-              field.getContentPane().repaint();                             
+              field.getContentPane().repaint();
               try{Thread.sleep(50);}catch(Exception e1){} // Very Very Important
               toRemove=false;
               crashIndex=0;
@@ -88,5 +91,4 @@ class Field{
         }
       }
     }
-}
-   
+} 
